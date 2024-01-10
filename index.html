@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    display: none;
+}
+.myDropdown{
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.button-container button  {
+  margin: 5px;
+}
+.hidden {
+  display: none;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.btn {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+.btn1{
+    background-color: #ff6600;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+}    
+.btn2{
+    background-color: #0099ff;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100px;
+      height: 50px;
+      aline: centre;
+}  
+
+.hiddenDiv {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+    }
+ 
+  </style>
+</head>
+<body>
+  <div id="login"class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm" onsubmit="validateForm(event)">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit"
+      class="btn">Login</button>
+      <button type="button" class="btn1">SOS</button>
+    </form>
+  </div>
+
+  <div id="hiddenDiv" class="button-container">
+
+    <label for="myDropdown">Type massage:</label>
+    <input  id="msg" name="msgtxt" >
+  <button type="submit" class="btn2" id="Send"> Send</button>
+     <dvi>
+        <button type="button" class="btn2" id="Camerabtn">Call</button>
+     </dvi>
+ 
+  </div>
+  
+  
+  <div id="myDiv">
+</div>
+  
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('myDiv').style.display = 'block';
+  });
+  function validateForm(event) {
+    event.preventDefault();
+    const password = document.getElementById('password').value;
+
+    // Replace 'correctPassword' with your actual password
+    if (password === '85227') {
+ //alert('Login successful!');
+ showHiddenDiv();
+      } else {
+        alert('Incorrect password. Please try again.');
+      }
+    }
+
+    function showHiddenDiv() {
+      document.getElementById('login').style.display = 'block';
+      document.getElementById('hiddenDiv').style.display = 'block';
+      document.getElementById('myDiv').style.display = 'block';
+      window.location.assign("home.html");
+    }
+</script>
+
+
+</body>
+</html>
+ 

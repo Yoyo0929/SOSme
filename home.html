@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            background:#000;
+        }
+        #messages{
+            position: fixed;
+            left:0;
+            top:0;
+            width:100%;
+            height:calc( 100% - 50px );
+            background:#000;
+            overflow-y:auto;
+            padding:10px;
+            box-sizing: border-box;
+        }
+        #sendMsg{
+            position: fixed;
+            left:0;
+            bottom:0;
+            width: 100%;
+            height:50px;
+            background:#AAA;
+        }
+        #msgTxt{
+            position: absolute;
+            left:0;
+            top:0;
+            width:calc(100% - 100px);
+            height:100%;
+            padding-left:10px;
+            box-sizing: border-box;
+        }
+        #msgBtn{
+            position: absolute;
+            right:0;
+            top:0;
+            width: 100px;
+            height:100%;
+        }
+        .outer{
+            width:100%;
+            margin-top:10px;
+            display:flex;
+        }
+        #inner{
+            padding:10px;
+            box-sizing: border-box;
+            border-radius:10px;
+        }
+        .me{
+            background:#8800FF;
+            color:#fff;
+        }
+        .notMe{
+            background:#FFF;
+            color:#000;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+    
+    </style>
+</head>
+
+<body>
+  
+    <div id="messages"></div>
+    
+    <div id="sendMsg">
+        <input type="text" id="msgTxt" placeholder="ENTER YOUR MSG...">
+        <input type="submit" id="msgBtn" value="send" onclick="module.sendMsg()">
+    </div>
+
+    <script>
+        module = {};
+    </script>    
+    
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  
+  import { getDatabase, ref, set, remove, onChildAdded, onChildRemoved } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+  
+  
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAMWGXOJu7-pcwO7qpKpGlF4lGTEAON_bE",
+    authDomain: "soschat-834e1.firebaseapp.com",
+    projectId: "soschat-834e1",
+    storageBucket: "soschat-834e1.appspot.com",
+    messagingSenderId: "704450890985",
+    appId: "1:704450890985:web:52cea513c6698958833478"
+  };
+  
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // variables
+        var msgTxt = document.getElementById('msgTxt');
+        var sender;
+        if(sessionStorage.getItem('sender')){
+            sender = sessionStorage.getItem('sender');
+        } else {
+            sender = prompt('PLEASE ENTER YOUR NAME');
+            sessionStorage.setItem('sender',sender);
+        }
+
+        // TO SEND MESSAGES
+        module.sendMsg = function sendMsg(){
+            var msg = msgTxt.value;
+            var timestamp = new Date().getTime();
+            set(ref(db,"messages/"+timestamp),{
+                msg : msg,
+                sender : sender
+            })
+
+            msgTxt.value="";
+        }
+
+        // TO RECEIVE MSG
+        onChildAdded(ref(db,"messages"), (data)=>{
+            if(data.val().sender == sender){
+                messages.innerHTML += "<div style=justify-content:end class=outer id="+data.key+"><div id=inner class=me>you : "+data.val().msg+"<button id=dltMsg onclick=module.dltMsg("+data.key+")>  DEL </button></div></div>";
+            } else {
+                messages.innerHTML += "<div class=outer id="+data.key+"><div id=inner class=notMe>"+data.val().sender+" : "+data.val().msg+"</div></div>";
+            }
+        })
+
+        // TO DELETE MSG
+        module.dltMsg = function dltMsg(key){
+            remove(ref(db,"messages/"+key));
+        }
+
+        // WHEN MSG IS DELETED
+        onChildRemoved(ref(db,"messages"),(data)=>{
+            var msgBox = document.getElementById(data.key);
+            messages.removeChild(msgBox);
+        })
+    </script>
+</body>
+
+</html>
