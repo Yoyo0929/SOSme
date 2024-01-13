@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width= 400,initial-scale=0.5,minimum-scale=0.8,maximum-scale=0.8" />
+    
     <style>
         body{
             margin:0;
@@ -13,6 +14,7 @@
         #messages{
             position: fixed;
             left:0;
+
             top:0;
             width:100%;
             height:calc( 100% - 70px );
@@ -44,10 +46,22 @@
             position: absolute;
             right:0;
             top:0;
-            width: 100px;
+            width: 80px;
             height:100%;
             border-radius: 8px;
             background-color: #ff6600;
+            color: #fff;
+           
+   
+        }
+        #msgBtn1{
+            position: absolute;
+            right:0;
+            top:0;
+            width: 60px;
+            height:5%;
+            border-radius: 8px;
+            background-color: #ff008c;
             color: #fff;
            
    
@@ -85,9 +99,13 @@
   
     <div id="messages"></div>
     
+    <dvi id="sendMsg1">
+        <input type="submit" id="msgBtn1" value="X🆘" onclick="simulateLogout()">
+       </dvi>
     <div id="sendMsg">
         <input type="text" id="msgTxt" placeholder="ENTER YOUR MSG...">
-        <input type="submit" id="msgBtn" value="send" onclick="module.sendMsg()">
+        <input type="submit" id="msgBtn" value="Send 🚀" onclick="module.sendMsg()">
+       
     </div>
 
     <script>
@@ -158,6 +176,25 @@
             messages.removeChild(msgBox);
         })
     </script>
+   
+
+    <script>
+        function simulateLogout() {
+            // Simulate login by setting a flag in sessionStorage
+            sessionStorage.setItem('isLoggedIn', 'true');
+            window.location.href = 'index.html';
+     }
+    </script>
+
+    <script>
+        // Check if the user is logged in using sessionStorage
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+        // Redirect to the login page if not logged in
+        if (!isLoggedIn) {
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 
 </html>

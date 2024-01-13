@@ -101,8 +101,7 @@ input {
     <form id="loginForm" onsubmit="validateForm(event)">
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>
-      <button type="submit"
-      class="btn">Login</button>
+      <button type="submit"class="btn">Login</button>
       <button type="button" class="btn1">SOS</button>
     </form>
   </div>
@@ -139,7 +138,13 @@ input {
       document.getElementById('hiddenDiv').style.display = 'block';
       document.getElementById('myDiv').style.display = 'block';
      document.getAnimations("password").values .value = '';
-      window.location.assign("home.html");
+     simulateLogin();
+      
+    }
+    function simulateLogin(){
+      sessionStorage.setItem('isLoggedIn','true');
+      window.location.href='home.html';
+
     }
 </script>
 
